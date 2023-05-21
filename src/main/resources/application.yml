@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/kshopeDB
+    username: root
+    password: typedef#12
+  jpa:
+    hibernate:
+      ddl-auto: update
