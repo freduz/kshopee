@@ -2,6 +2,7 @@ package com.daniel.kshopee.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,20 +10,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "product_tbl")
+@Builder
 public class Product {
     @Id()
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
-    @Column(name = "product_name")
+    @Column(name = "product_name",nullable = false)
     private String name;
-    @Column(name = "product_description")
+    @Column(name = "product_description",nullable = false)
     private String description;
 
-    @Column(name = "product_qty")
+    @Column(name = "product_qty",nullable = false)
     private int quantity;
 
-    @Column(name = "product_price")
+    @Column(name = "product_price",nullable = false)
     private double price;
 
 }
