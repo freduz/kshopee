@@ -3,9 +3,14 @@ package com.daniel.kshopee.service.impl;
 import com.daniel.kshopee.entity.Product;
 import com.daniel.kshopee.exception.ResourceNotFoundException;
 import com.daniel.kshopee.payload.ProductDto;
+import com.daniel.kshopee.payload.ProductResponse;
 import com.daniel.kshopee.repository.ProductRepository;
 import com.daniel.kshopee.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,10 +57,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> getAllProducts() {
-        List<Product> products = this.productRepository.findAll();
+    public ProductResponse getAllProducts(int pageNo, int pageSize,String sortBy,String sortDir) {
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNo,pageSize, sort);
+        Page<Product> products = this.productRepository.findAll(pageable);
         Function<Product,ProductDto> mapProduct = this::mapToDto;
-        return products.stream().map(mapProduct).collect(Collectors.toList());
+        List<ProductDto> content = products.getContent().stream().map(mapProduct).collect(Collectors.toList());
+        ProductResponse productResponse = ProductResponse.builder()
+                .content(content)
+                .pageNo(products.getNumber())
+                .pageSize(products.getSize())
+                .totalElements(products.getTotalElements())
+                .totalPages(products.getTotalPages())
+                .isLast(products.isLast())
+                .build();
+        return productResponse;
     }
 
 

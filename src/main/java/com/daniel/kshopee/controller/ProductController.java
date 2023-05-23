@@ -2,14 +2,13 @@ package com.daniel.kshopee.controller;
 
 
 import com.daniel.kshopee.payload.ProductDto;
+import com.daniel.kshopee.payload.ProductResponse;
 import com.daniel.kshopee.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
@@ -32,8 +31,13 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductDto>> getAllProducts(){
-        return new ResponseEntity<List<ProductDto>>(this.productService.getAllProducts(), HttpStatus.OK);
+    public ResponseEntity<ProductResponse> getAllProducts(
+            @RequestParam(name = "pageSize",required = false,defaultValue ="10") int pageSize ,
+            @RequestParam(name = "pageNo",required = false,defaultValue ="0") int pageNo,
+            @RequestParam(name = "sortBy" ,defaultValue = "id" ,required = false) String sortBy,
+            @RequestParam(name = "sortDir",defaultValue = "asc",required = false) String sortDir
+            ){
+        return new ResponseEntity<ProductResponse>(this.productService.getAllProducts(pageNo,pageSize,sortBy,sortDir), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
