@@ -6,3 +6,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  servlet:
+    multipart:
+      enabled: true
+app:
+  jwt-secret: c1e42c73d2caa6c479a3c2f568c77270aaa62c7ca642e29361bc82becb454e82
+  jwt-expiration-milliseconds: 604800000
+cloudinary:
+  cloud-name: dzc9ka15g
+  api-key: 159673811481642
+  api-secret: uuNFzVY8OUGeMbPHQD7IcU0Pcg4
