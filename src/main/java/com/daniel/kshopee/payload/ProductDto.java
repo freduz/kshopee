@@ -4,6 +4,8 @@ package com.daniel.kshopee.payload;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
 public class ProductDto {
@@ -14,4 +16,8 @@ public class ProductDto {
     private String description;
     private int quantity;
     private double price;
+    private List<String> images;
+
+
+    private String sellerName;
 }
