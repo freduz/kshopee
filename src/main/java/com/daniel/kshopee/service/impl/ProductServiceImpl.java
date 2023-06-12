@@ -53,11 +53,9 @@ public class ProductServiceImpl implements ProductService {
         this.userRepository = userRepository;
         this.fileUploadService = fileUploadService;
         this.productMediaRepository = productMediaRepository;
-
     }
 
     private Product mapToEntity(ProductDto productDto){
-
         String  email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(email).get();
 
@@ -89,9 +87,6 @@ public class ProductServiceImpl implements ProductService {
                 .images(images)
                 .build();
     }
-
-
-
 
 
     @Override
@@ -157,6 +152,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(long id) {
-        this.productRepository.deleteById(id);
+      this.productRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAllProduct(){
+        this.productRepository.deleteAll();
     }
 }

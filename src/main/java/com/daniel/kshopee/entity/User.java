@@ -45,4 +45,8 @@ public class User {
     @JsonManagedReference
     private List<Product> product;
 
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonManagedReference
+    private Cart cart;
+
 }

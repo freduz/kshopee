@@ -31,7 +31,6 @@ public class SellerController {
     @PreAuthorize("hasRole('SELLER')")
     public ResponseEntity<Seller> getProfileData(){
        Seller seller =  this.sellerService.getProfile();
-        System.out.println(seller.getAccountNo());
         return new ResponseEntity<Seller>(seller,HttpStatus.CREATED);
     }
 }
