@@ -3,12 +3,11 @@ package com.daniel.kshopee.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Entity
 @Table(name = "cart_tbl")
@@ -16,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 public class Cart {
 
     @Id
@@ -23,11 +23,27 @@ public class Cart {
     private long id;
 
     @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<CartItem> cartItems;
+    private List<CartItem> cartItems = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;
 
+
+    public CartItem getCartItemByProductId(long productId) {
+        Predicate<CartItem> filterCart = cartItem -> {
+            return cartItem.getProduct().getId().equals(productId);
+        };
+        CartItem cartItem = null;
+        if(this.cartItems !=null){
+            cartItem = this.cartItems.stream().filter(filterCart).findFirst().orElse(null);
+        }
+
+        return cartItem;
+    }
+
+    public void addCartItem(CartItem cartItem){
+        this.cartItems.add(cartItem);
+    }
 }

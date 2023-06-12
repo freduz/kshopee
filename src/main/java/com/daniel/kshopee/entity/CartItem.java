@@ -3,15 +3,13 @@ package com.daniel.kshopee.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "cart_items_tbl")
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartItem {
@@ -19,7 +17,9 @@ public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private long productId;
+
+    @ManyToOne
+    private Product product;
     private int quantity;
 
     @ManyToOne(fetch = FetchType.EAGER)
