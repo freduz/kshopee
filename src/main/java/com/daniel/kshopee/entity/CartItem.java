@@ -22,7 +22,7 @@ public class CartItem {
     private Product product;
     private int quantity;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")
     @JsonBackReference
     private Cart cart;
